@@ -6,8 +6,12 @@ const app = express()
 app.use(express.static('public'))
 
 app.get('/api/bug', (req, res) => {
-    console.log("here")
-    bugService.query()
+    const filterBy = {
+        txt: req.query.txt || '',
+        minSeverity: +req.query.minSeverity,
+    }
+
+    bugService.query(filterBy)
         .then(bugs => res.send(bugs))
         .catch(err => {
             loggerService.error('Cannot get bugs', err)
