@@ -1,8 +1,9 @@
 import express from 'express'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
-
 const app = express()
+
+// app.use(express.static('public'))
 
 app.get('/api/bug', (req, res) => {
     bugService.query()
@@ -42,13 +43,16 @@ app.get('/api/bug/:bugId', (req, res) => {
 app.get('/api/bug/:bugId/remove', (req, res) => {
     const { bugId } = req.params
     bugService.remove(bugId)
-        .then(res.send("file removed!"))
+        .then(() => res.send("file removed!"))
         .catch(err => {
             loggerService.error('Cannot renove bug', err)
             res.status(400).send('Cannot remove bug')
         })
 })
 
+app.get('/', (req, res) => {
+    res.send({ title: 'Hello And Welcome' })
+})
 
 const port = 3030
 app.listen(port, () =>
