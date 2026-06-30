@@ -1,9 +1,11 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
 const app = express()
 
 app.use(express.static('public'))
+app.use(cookieParser())
 
 app.get('/api/bug', (req, res) => {
     const filterBy = {
@@ -37,8 +39,16 @@ app.get('/api/bug/save', (req, res) => {
 
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+    let visitedBugIds = req.cookies.visitedBugIds || []
+    if (!visitedBugIds.includes(bugId)) visitedBugIds.push(bugId)
+    if (visitedBugIds.length > 3)
+        return res.status(401).send('Wait for a bit')
+
     bugService.getById(bugId)
-        .then(bug => res.send(bug))
+        .then(bug => {
+            res.cookie('visitedBugIds', visitedBugIds, { maxAge: 1000 * 7 })
+            res.send(bug)
+        })
         .catch(err => {
             loggerService.error('Cannot get bug', err)
             res.status(400).send('Cannot get bug')
