@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Login Button Not Responsive",
+    "severity": 2,
+    "createdAt": 1736703760096,
+    "_id": "bug001",
+    "description": "Clicking the login button does not trigger any action. Affects multiple browsers."
+  },
+  {
+    "title": "Database Connection Timeout",
+    "severity": 3,
+    "createdAt": 1728250712096,
+    "_id": "bug002",
+    "description": "Intermittent database connection issues causing failed requests."
+  },
+  {
+    "title": "Profile Image Not Updating",
+    "severity": 1,
+    "createdAt": 1714256438096,
+    "_id": "bug003",
+    "description": "Uploading a new profile image does not reflect on the frontend."
+  },
+  {
+    "title": "Password Reset Email Not Sent",
+    "severity": 2,
+    "createdAt": 1724798982096,
+    "_id": "bug004",
+    "description": "Users are not receiving password reset emails, causing account lockouts."
+  },
+  {
+    "title": "Mobile Navigation Menu Overlapping",
+    "severity": 2,
+    "createdAt": 1727443345096,
+    "_id": "bug006",
+    "description": "Navigation menu overlaps with content on mobile devices."
+  },
+  {
+    "title": "Checkout Process Freezes",
+    "severity": 3,
+    "createdAt": 1708367681096,
+    "_id": "bug007",
+    "description": "Users unable to complete checkout due to the process freezing at the payment step."
+  },
+  {
+    "title": "Notification Sounds Not Playing",
+    "severity": 1,
+    "createdAt": 1730367484096,
+    "_id": "bug008",
+    "description": "Notification sounds are not playing despite being enabled in settings."
+  },
+  {
+    "title": "Dark Mode Not Persisting",
+    "severity": "1",
+    "_id": "VBTVk",
+    "createdAt": 1743681961077,
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
+  },
+  {
+    "title": "Authentication Timeout Error",
+    "severity": "4",
+    "_id": "hi3of",
+    "createdAt": 1743682158196,
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
+  }
+]

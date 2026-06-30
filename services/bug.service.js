@@ -1,0 +1,56 @@
+import fs from 'fs'
+import { utilService } from './util.service.js'
+let bugs = utilService.readJsonFile('data/bug.json')
+
+export const bugService = {
+    query,
+    getById,
+    remove,
+    save
+}
+
+function query() {
+    return Promise.resolve(bugs)
+}
+
+function getById(bugId) {
+    const bug = bugs.find(bug => bug._id === bugId)
+    if (!bug) return Promise.reject('No bug found')
+    else return Promise.resolve(bug)
+}
+
+function remove(bugId) {
+    const idx = bugs.findIndex(bug => bug._id === bugId)
+    bugs.splice(idx, 1)
+    return _saveBugsToFile()
+}
+
+function save(bugToSave) {
+    if (bugToSave._id) {
+        const idx = bugs.findIndex(bug => bug._id === bugToSave._id)
+        bugs[idx] = bugToSave
+    }
+    else {
+        bugToSave._id = utilService.makeId()
+        bugToSave.createdAt = Date.now()
+        bugToSave.description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at.'
+        bugs.push(bugToSave)
+    }
+
+    return _saveBugsToFile()
+        .then(() => bugToSave)
+}
+
+function _saveBugsToFile() {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('data/bug.json', JSON.stringify(bugs, null, 2), (err) => {
+            if (err) {
+                console.log(err);
+                reject('Cannot write to file')
+            } else {
+                console.log('Wrote Successfully!')
+                resolve()
+            }
+        })
+    })
+}
