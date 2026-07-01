@@ -15,11 +15,32 @@ function query(filterBy = {}) {
         const regExp = new RegExp(filterBy.txt, 'i')
         bugToDisplay = bugToDisplay.filter(bug => regExp.test(bug.title))
     }
-    if (filterBy.minSeverity) {
+
+    if (filterBy.minSeverity)
         bugToDisplay = bugToDisplay.filter(bug => bug.severity >= filterBy.minSeverity)
+
+    if (filterBy.labels) {
+        const labelsToFilter = filterBy.labels
+        bugs = bugs.filter((bug) =>
+            labelsToFilter.every((label) => bug.labels.includes(label))
+        )
     }
 
-    return Promise.resolve(bugToDisplay)
+    const sortBy = filterBy.sortBy
+    if (sortBy.type === 'createdAt') {
+        bugs.sort((b1, b2) => (sortBy.desc) * (b1.createdAt - b2.createdAt))
+    } else if (sortBy.type === 'title') {
+        bugs.sort((b1, b2) => (sortBy.desc) * (b1.title.localeCompare(b2.title)))
+    }
+
+    const totalPageSize = Math.ceil(bugs.length / PAGE_SIZE)
+
+    if (filterBy.pageIdx !== undefined) {
+        const startIdx = filterBy.pageIdx * PAGE_SIZE;
+        bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
+    }
+
+    return Promise.resolve({ bugs, totalPageSize })
 }
 
 function getById(bugId) {

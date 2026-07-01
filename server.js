@@ -13,8 +13,13 @@ app.set('query parser', 'extended')
 app.get('/api/bug', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
+        labels: req.query.labels || '',
         minSeverity: +req.query.minSeverity || 0,
+        sortBy: req.query.sortBy ? JSON.parse(req.query.sortBy) : {}
     }
+
+    if (req.query.pageIdx || req.query.pageIdx === 0)
+        filterBy.pageIdx = +req.query.pageIdx
 
     bugService.query(filterBy)
         .then(bugs => res.send(bugs))
