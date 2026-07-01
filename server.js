@@ -6,6 +6,8 @@ const app = express()
 
 app.use(express.static('public'))
 app.use(cookieParser())
+app.use(express.json())
+app.set('query parser', 'extended')
 
 app.get('/api/bug', (req, res) => {
     const filterBy = {
