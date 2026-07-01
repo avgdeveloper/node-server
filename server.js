@@ -1,5 +1,6 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
 const app = express()
@@ -92,6 +93,10 @@ app.delete('/api/bug/:bugId', (req, res) => {
             loggerService.error('Cannot renove bug', err)
             res.status(400).send('Cannot remove bug')
         })
+})
+
+app.get('/*all', (req, res) => {
+    res.sendFile(path.resolve('public/index.html'))
 })
 
 // app.get('/', (req, res) => {
