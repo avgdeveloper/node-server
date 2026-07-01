@@ -9,6 +9,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.set('query parser', 'extended')
 
+//* Read bugs
 app.get('/api/bug', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
@@ -23,22 +24,7 @@ app.get('/api/bug', (req, res) => {
         })
 })
 
-app.get('/api/bug/save', (req, res) => {
-    const bugToSave = {
-        _id: req.query._id,
-        title: req.query.title,
-        severity: +req.query.severity,
-    }
-
-    bugService.save(bugToSave)
-        .then((savedBug) => res.send(savedBug))
-        .catch(err => {
-            loggerService.error('Cannot save bug', err)
-            res.status(400).send('Cannot save bug')
-        })
-
-})
-
+//* Read bug
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
     let visitedBugIds = req.cookies.visitedBugIds || []
@@ -57,7 +43,43 @@ app.get('/api/bug/:bugId', (req, res) => {
         })
 })
 
-app.get('/api/bug/:bugId/remove', (req, res) => {
+//* Add bug 
+app.post('/api/bug', (req, res) => {
+    const bugToSave = {
+        _id: req.body._id,
+        title: req.body.title,
+        severity: +req.body.severity,
+        // labels: req.body.labels
+    }
+
+    bugService.save(bugToSave)
+        .then((savedBug) => res.send(savedBug))
+        .catch(err => {
+            loggerService.error('Cannot save bug', err)
+            res.status(400).send('Cannot save bug')
+        })
+
+})
+
+//* Edit bug 
+app.put('/api/bug/:bugId', (req, res) => {
+    const bugToSave = {
+        _id: req.body._id,
+        title: req.body.title,
+        severity: +req.body.severity,
+        // labels: req.body.labels
+    }
+
+    bugService.save(bugToSave)
+        .then((savedBug) => res.send(savedBug))
+        .catch(err => {
+            loggerService.error('Cannot save bug', err)
+            res.status(400).send('Cannot save bug')
+        })
+
+})
+
+app.delete('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
     bugService.remove(bugId)
         .then(() => res.send("file removed!"))
@@ -67,9 +89,9 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
         })
 })
 
-app.get('/', (req, res) => {
-    res.send({ title: 'Hello And Welcome' })
-})
+// app.get('/', (req, res) => {
+//     res.send({ title: 'Hello And Welcome' })
+// })
 
 const port = 3030
 app.listen(port, () =>

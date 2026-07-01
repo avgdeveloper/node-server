@@ -18,7 +18,6 @@
     "_id": "bug006",
     "labels": [
       "critical",
-      "need-CR",
       "dev-branch"
     ],
     "description": "Navigation menu overlaps with content on mobile devices."
@@ -30,8 +29,7 @@
     "_id": "bug007",
     "labels": [
       "critical",
-      "need-CR",
-      "dev-branch"
+      "need-CR"
     ],
     "description": "Users unable to complete checkout due to the process freezing at the payment step."
   },
@@ -41,7 +39,6 @@
     "createdAt": 1730367484096,
     "_id": "bug008",
     "labels": [
-      "critical",
       "need-CR",
       "dev-branch"
     ],
@@ -53,9 +50,7 @@
     "_id": "VBTVk",
     "createdAt": 1743681961077,
     "labels": [
-      "critical",
-      "need-CR",
-      "dev-branch"
+      "critical"
     ],
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
   },
@@ -65,9 +60,7 @@
     "_id": "hi3of",
     "createdAt": 1743682158196,
     "labels": [
-      "critical",
-      "need-CR",
-      "dev-branch"
+      "need-CR"
     ],
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
   },
