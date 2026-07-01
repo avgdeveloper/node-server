@@ -1,8 +1,10 @@
-import { utilService } from './util.service.js'
+
 import { storageService } from './async-storage.service.js'
 
-const STORAGE_KEY = 'bugs'
-const BASE_URL = '/api/bug/'
+const BASE_URL = `/api/bug/`
+const STORAGE_KEY = 'bugDB'
+let gPageIdx = 0
+
 
 
 export const bugService = {
@@ -10,29 +12,39 @@ export const bugService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    getDefaultSortBy,
+    downloadBugsPdf
 }
+// AFTER REST!!
 
-function query(filterBy) {
-    return axios.get(BASE_URL, { params: filterBy })
-        .then(res => res.data)
+function query(filterBy = {}, sortBy = {}) {
+    const filterAndSort = { ...filterBy, sortBy }
+    return axios.get(BASE_URL, { params: filterAndSort }).then(res => res.data)
 }
 
 function getById(bugId) {
-    return axios.get(BASE_URL + bugId)
-        .then(res => res.data)
+    return axios.get(BASE_URL + bugId).then(res => res.data)
 }
 
 function remove(bugId) {
-    return axios.get(BASE_URL + bugId + "/remove")
-        .then(res => res.data)
+    return axios.delete(BASE_URL + bugId)
 }
 
 function save(bug) {
-    return axios.get(BASE_URL + 'save', { params: bug })
-        .then(res => res.data)
+    const method = bug._id ? 'put' : 'post'
+    return axios[method](BASE_URL, bug).then(res => res.data)
+}
+
+
+function downloadBugsPdf() {
+    return axios.post(BASE_URL + 'pdf').then(res => res.data)
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 }
+    return { txt: '', minSeverity: '', labels: '', pageIdx: 0 }
+}
+
+function getDefaultSortBy() {
+    return { type: '', desc: 1 }
 }

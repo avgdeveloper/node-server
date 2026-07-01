@@ -1,50 +1,61 @@
-const { useState, useEffect } = React
+import { utilService } from '../services/util.service.js'
+import { LabelSelector } from './LabelSelect.jsx'
 
-export function BugFilter({ filterBy, onSetFilterBy }) {
+const { useState, useEffect, useRef } = React
+
+export function BugFilter({ onSetFilter, filterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const onSetFilterDebounce = useRef(utilService.debounce(onSetFilter, 700)).current
 
     useEffect(() => {
-        onSetFilterBy(filterByToEdit)
+        onSetFilterDebounce(filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {
         const field = target.name
-        let value = target.value
-
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value || ''
-                break
-
-            case 'checkbox':
-                value = target.checked
-                break
-
-            default:
-                break
-        }
-
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        const value = target.type === 'number' ? +target.value : target.value
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            [field]: value,
+        }))
     }
 
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilterBy(filterByToEdit)
+    function onLabelChange(selectedLabels) {
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            labels: selectedLabels,
+        }))
     }
 
-    const { txt, minSeverity } = filterByToEdit
+    const { minSeverity, txt } = filterByToEdit
     return (
-        <section className="bug-filter">
-            <h2>Filter</h2>
-            <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt">Text: </label>
-                <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
+        <form className="bug-filter">
+            <h3>Filter Bugs</h3>
 
-                <label htmlFor="minSeverity">Min Severity: </label>
-                <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
-            </form>
-        </section>
+            <div className="filter-container">
+                <div>
+                    <input
+                        className="filter-input"
+                        type="text"
+                        id="txt"
+                        name="txt"
+                        value={txt}
+                        placeholder="Enter text here..."
+                        onChange={handleChange}
+                    />
+                    <input
+                        placeholder="Enter severity here.."
+                        className="filter-input"
+                        type="number"
+                        id="minSeverity"
+                        name="minSeverity"
+                        value={minSeverity || ''}
+                        onChange={handleChange}
+                    />
+                </div>
+                <LabelSelector onLabelChange={onLabelChange} />
+            </div>
+        </form>
     )
 }

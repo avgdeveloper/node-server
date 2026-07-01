@@ -1,12 +1,14 @@
 import fs from 'fs'
 import { utilService } from './util.service.js'
+import { pdfService } from './pdf.service.js'
 let bugs = utilService.readJsonFile('data/bug.json')
 
 export const bugService = {
     query,
     getById,
     remove,
-    save
+    save,
+    getPdf
 }
 
 const PAGE_SIZE = 3
@@ -72,6 +74,10 @@ function save(bugToSave) {
 
     return _saveBugsToFile()
         .then(() => bugToSave)
+}
+
+function getPdf() {
+    return pdfService.buildBugsPDF(bugs) //pdf bonus
 }
 
 function _saveBugsToFile() {

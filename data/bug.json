@@ -82,5 +82,12 @@
     ],
     "createdAt": 1782891219331,
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
+  },
+  {
+    "_id": "TukzM",
+    "title": "Bug 1782895280481",
+    "severity": 2,
+    "createdAt": 1782895283616,
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
   }
 ]

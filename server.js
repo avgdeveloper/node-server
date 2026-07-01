@@ -68,7 +68,7 @@ app.post('/api/bug', (req, res) => {
 })
 
 //* Edit bug 
-app.put('/api/bug/:bugId', (req, res) => {
+app.put('/api/bug', (req, res) => {
     const bugToSave = {
         _id: req.body._id,
         title: req.body.title,
@@ -92,6 +92,15 @@ app.delete('/api/bug/:bugId', (req, res) => {
         .catch(err => {
             loggerService.error('Cannot renove bug', err)
             res.status(400).send('Cannot remove bug')
+        })
+})
+
+app.post('/api/bug/pdf', (req, res) => {
+    bugService.getPdf()
+        .then((result) => res.send(result))
+        .catch(err => {
+            loggerService.error('Cannot download Buds Pdf', err)
+            res.status(400).send('Cannot download Buds Pdf')
         })
 })
 
