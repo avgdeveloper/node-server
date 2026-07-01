@@ -56,24 +56,31 @@
   },
   {
     "title": "Authentication Timeout Error",
-    "severity": "4",
+    "severity": 4,
     "_id": "hi3of",
     "createdAt": 1743682158196,
     "labels": [
+      "critical",
       "need-CR"
     ],
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
   },
   {
-    "_id": "G0cgL",
-    "title": "Bug 1782815272549",
-    "severity": 3,
-    "createdAt": 1782815284068,
+    "_id": "GFHfU",
+    "title": "Authentication Error",
+    "severity": 4,
+    "createdAt": 1782890898907,
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
+  },
+  {
+    "_id": "rOzWW",
+    "title": "Authentication Error",
+    "severity": 4,
     "labels": [
       "critical",
-      "need-CR",
-      "dev-branch"
+      "need-CR"
     ],
+    "createdAt": 1782891219331,
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, earum sed corrupti voluptatum voluptatem at."
   }
 ]

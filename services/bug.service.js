@@ -9,6 +9,8 @@ export const bugService = {
     save
 }
 
+const PAGE_SIZE = 3
+
 function query(filterBy = {}) {
     let bugToDisplay = [...bugs]
     if (filterBy.txt) {
@@ -21,26 +23,27 @@ function query(filterBy = {}) {
 
     if (filterBy.labels) {
         const labelsToFilter = filterBy.labels
-        bugs = bugs.filter((bug) =>
+        bugToDisplay = bugToDisplay.filter((bug) =>
             labelsToFilter.every((label) => bug.labels.includes(label))
         )
     }
 
     const sortBy = filterBy.sortBy
+
     if (sortBy.type === 'createdAt') {
-        bugs.sort((b1, b2) => (sortBy.desc) * (b1.createdAt - b2.createdAt))
+        bugToDisplay.sort((b1, b2) => (sortBy.desc) * (b1.createdAt - b2.createdAt))
     } else if (sortBy.type === 'title') {
-        bugs.sort((b1, b2) => (sortBy.desc) * (b1.title.localeCompare(b2.title)))
+        bugToDisplay.sort((b1, b2) => (sortBy.desc) * (b1.title.localeCompare(b2.title)))
     }
 
-    const totalPageSize = Math.ceil(bugs.length / PAGE_SIZE)
+    const totalPageSize = Math.ceil(bugToDisplay.length / PAGE_SIZE)
 
     if (filterBy.pageIdx !== undefined) {
         const startIdx = filterBy.pageIdx * PAGE_SIZE;
-        bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
+        bugToDisplay = bugToDisplay.slice(startIdx, startIdx + PAGE_SIZE)
     }
 
-    return Promise.resolve({ bugs, totalPageSize })
+    return Promise.resolve({ bugs: bugToDisplay, totalPageSize })
 }
 
 function getById(bugId) {

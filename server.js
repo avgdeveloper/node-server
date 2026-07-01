@@ -13,7 +13,7 @@ app.set('query parser', 'extended')
 app.get('/api/bug', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
-        labels: req.query.labels || '',
+        labels: req.query.labels ? JSON.parse(req.query.labels) : '',
         minSeverity: +req.query.minSeverity || 0,
         sortBy: req.query.sortBy ? JSON.parse(req.query.sortBy) : {}
     }
@@ -54,7 +54,7 @@ app.post('/api/bug', (req, res) => {
         _id: req.body._id,
         title: req.body.title,
         severity: +req.body.severity,
-        // labels: req.body.labels
+        labels: req.body.labels
     }
 
     bugService.save(bugToSave)
@@ -72,7 +72,7 @@ app.put('/api/bug/:bugId', (req, res) => {
         _id: req.body._id,
         title: req.body.title,
         severity: +req.body.severity,
-        // labels: req.body.labels
+        labels: req.body.labels
     }
 
     bugService.save(bugToSave)
